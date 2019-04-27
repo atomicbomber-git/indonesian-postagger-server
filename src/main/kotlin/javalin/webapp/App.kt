@@ -24,11 +24,14 @@ class App {
 }
 
 fun main(args: Array<String>) {
+    // Menjalankan server
     val app = Javalin.create().start(7000)
 
+    // Membuat object Tagger
     val tagger = getTagger()
 
     app.post("/") { ctx ->
+        // Menerima request HTTP dalam bentuk teks dan memproses teks tersebut dengan menggunakan Tagger yang telah dibuat
         val text = ctx.formParam("text")?.replace("\n", " ")
         ctx.json(object {
             val text = tagger.tagText(text).joinToString(" ")
